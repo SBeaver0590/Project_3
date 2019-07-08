@@ -1,8 +1,8 @@
-
+// this submission is to see what can be improved. I am going for meets expectations.
 $(document).ready(function() {
     //Focus Section
     $('#name').focus();//Here is where I set focus to the name input field.
-   
+});
    
     //Job Role Section   
     $('#other-title').hide(); //target the other input field and hide it.
@@ -85,41 +85,42 @@ $(document).ready(function() {
             $('#credit-card').show();
             $('#paypal, #bitcoin, p:first, p:last').hide();
         }
+    
+    });  
+    $('form').submit(function(e){
         //Form Validation Section
         var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
         var creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/g;
         var zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
         var errorMessage ="";
-        $('form').prepend('<p id="error-message"></p>');
-        $('#error-message').hide();
-        //if the user fails to provide all the required information show an error and do not allow it to be submitted.
-        $('form').submit(function(e){
-            e.preventDefault();
-            if($('#name').val()=== ""){
-                errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
-                $('#name').addedClass('error');
-                $('#name').focus();
-            }else if(!emailAddress.test($('#mail').val()) ){
-                errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
-                $('#mail').focus();
-            }else if($(".activities > label > input:checked").length=== 0 ){
-                errorMessage= "<h2>Error!</h2> Please select at least one activity.";
-                $('.activities').focus();
-            }else if($('#payment').val()==="credit card"&& !creditCard.test($("#cc-num").val()) ){
-                errorMessage= "<h2>Error!</h2> Please enter a valid credit card number.";
-                $('#cc-num').focus();
-            }else if($('#payment').val()==="credit card"&& !zipCode.test($("#zip").val())){
-                errorMessage= "<h2>Error!</h2> Please enter a valid zip code.";
-                $('#zip').focus();
-            }else if($('#payment').val()==="credit card"&& $("#cvv").val().length < 3) {
-                errorMessage= "<h2>Error!</h2> Please enter 3 digits for your CVV";
-                $('#cvv').focus();
-            }else{
-                errorMessage="";
-                alert("COMPLETE!");
-            }
-            document.getElementById('error-message').innerHTML= errorMessage;
-        });
-    
-    });  
-});
+        //if the user fails to provide all the required information show an error and do not allow it to be submitted
+        //until all fields are complete.
+            
+        if($('#name').val()=== ""){
+            errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
+            $('#name').addClass('error');
+            $('#name').focus();
+        }else if(!emailAddress.test($('#mail').val()) ){
+            errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
+            $('#mail').focus();
+        }else if($(".activities > label > input:checked").length=== 0 ){
+            errorMessage= "<h2>Error!</h2> Please select at least one activity.";
+            $('.activities').focus();
+        }else if($('#payment').val()==="credit card"&& !creditCard.test($("#cc-num").val()) ){
+            errorMessage= "<h2>Error!</h2> Please enter a valid credit card number.";
+            $('#cc-num').focus();
+        }else if($('#payment').val()==="credit card"&& !zipCode.test($("#zip").val())){
+            errorMessage= "<h2>Error!</h2> Please enter a valid zip code.";
+            $('#zip').focus();
+        }else if($('#payment').val()==="credit card"&& $("#cvv").val().length < 3) {
+            errorMessage= "<h2>Error!</h2> Please enter 3 digits for your CVV";
+            $('#cvv').focus();
+        }else{
+            errorMessage="";
+            alert("COMPLETE!");
+        }
+        //let newErrorMessage= $('').append('errorMessage');
+        document.getElementById('errorMessage').innerHTML= errorMessage;
+        e.preventDefault();
+    });
+    $('form').prepend('<div id="errorMessage"></div>');
