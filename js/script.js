@@ -6,7 +6,7 @@ $(document).ready(function() {
    
     //Job Role Section   
     $('#other-title').hide(); //target the other input field and hide it.
-    $('#title').on('click', function(event){ // here is where i said if th               cdcdcd 
+    $('#title').on('click', function(event){ // here is where i said if the option other was clicked show the text field.
 
         if ($('#title').val() == 'other') {
             $('#other-title').show();
@@ -18,7 +18,7 @@ $(document).ready(function() {
     //T-Shirt Section
     $('#color option').hide();
     $('#design option:first').hide();
-
+    //Hide all options based on the design clicked show available options for that color.
     $('#design').on('click',function(){
         $('#color option').hide();
         if ($(this).val() == "js puns"){
@@ -37,10 +37,7 @@ $(document).ready(function() {
         let parentLabelText = $(this)[0].parentElement.innerText; // Get the parent label text of the selected checkbox
         let dollarIndex = parentLabelText.indexOf("$");  // Get the dollar index in the selected checkbox parent label text
         let activityCost = parentLabelText.slice(dollarIndex + 1);  // Get the activity cost from the selected checkbox parent label text
-    });
-     
-       
-    
+
         // If the selected check box is checked, add the activity cost to the total activity cost
             if ($(this)[0].checked) {
           totalActivityCost += parseInt(activityCost);
@@ -71,27 +68,58 @@ $(document).ready(function() {
             }
          }
           }
-      });
+    });
     //Payment Section
     $('#payment').val('credit card');
     $('p:first').hide();
     $('p:last').hide();
-
+    //Show the credit card option initially, if user chooses something else show method for that option.
     $('#payment').change(function() {
-    if($('#payment option:selected').val() === 'paypal') {
-        $('#credit-card, #bitcoin, p:last').hide();
-        $('#paypal, p:first').show();
-    } else if ($('#payment option:selected').val() === "bitcoin") {
-        $('#credit-card, #paypal, p:first').hide();
-        $('#bitcoin, p:last').show();
-    } else {
-        $('#credit-card').show();
-        $('#paypal, #bitcoin, p:first, p:last').hide();
-    }
-    //Form Validation Section
-    var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-    var creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/g;
-    var zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
-    var errorMessage ="";
+        if($('#payment option:selected').val() === 'paypal') {
+            $('#credit-card, #bitcoin, p:last').hide();
+            $('#paypal, p:first').show();
+        } else if ($('#payment option:selected').val() === "bitcoin") {
+            $('#credit-card, #paypal, p:first').hide();
+            $('#bitcoin, p:last').show();
+        } else {
+            $('#credit-card').show();
+            $('#paypal, #bitcoin, p:first, p:last').hide();
+        }
+        //Form Validation Section
+        var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+        var creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/g;
+        var zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
+        var errorMessage ="";
+        $('form').prepend('<p id="error-message"></p>');
+        $('#error-message').hide();
+        //if the user fails to provide all the required information show an error and do not allow it to be submitted.
+        $('form').submit(function(e){
+            e.preventDefault();
+            if($('#name').val()=== ""){
+                errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
+                $('#name').addedClass('error');
+                $('#name').focus();
+            }else if(!emailAddress.test($('#mail').val()) ){
+                errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
+                $('#mail').focus();
+            }else if($(".activities > label > input:checked").length=== 0 ){
+                errorMessage= "<h2>Error!</h2> Please select at least one activity.";
+                $('.activities').focus();
+            }else if($('#payment').val()==="credit card"&& !creditCard.test($("#cc-num").val()) ){
+                errorMessage= "<h2>Error!</h2> Please enter a valid credit card number.";
+                $('#cc-num').focus();
+            }else if($('#payment').val()==="credit card"&& !zipCode.test($("#zip").val())){
+                errorMessage= "<h2>Error!</h2> Please enter a valid zip code.";
+                $('#zip').focus();
+            }else if($('#payment').val()==="credit card"&& $("#cvv").val().length < 3) {
+                errorMessage= "<h2>Error!</h2> Please enter 3 digits for your CVV";
+                $('#cvv').focus();
+            }else{
+                errorMessage="";
+                alert("COMPLETE!");
+            }
+            document.getElementById('error-message').innerHTML= errorMessage;
+        });
     
-});  
+    });  
+});
