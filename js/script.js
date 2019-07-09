@@ -97,31 +97,36 @@ $(document).ready(function() {
         //until all fields are complete.
             
         if($('#name').val()=== ""){
+            e.preventDefault();
             errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
             $('#name').addClass('error');
             $('#name').focus();
         }else if(!emailAddress.test($('#mail').val()) ){
+            e.preventDefault();
             errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
             $('#mail').focus();
         }else if($(".activities > label > input:checked").length=== 0 ){
+            e.preventDefault();
             errorMessage= "<h2>Error!</h2> Please select at least one activity.";
             $('.activities').focus();
         }else if($('#payment').val()==="credit card"&& !creditCard.test($("#cc-num").val()) ){
+            e.preventDefault();
             errorMessage= "<h2>Error!</h2> Please enter a valid credit card number.";
             $('#cc-num').focus();
         }else if($('#payment').val()==="credit card"&& !zipCode.test($("#zip").val())){
+            e.preventDefault();
             errorMessage= "<h2>Error!</h2> Please enter a valid zip code.";
             $('#zip').focus();
         }else if($('#payment').val()==="credit card"&& $("#cvv").val().length < 3) {
+            e.preventDefault();
             errorMessage= "<h2>Error!</h2> Please enter 3 digits for your CVV";
             $('#cvv').focus();
         }else{
             errorMessage="";
-            alert("COMPLETE!");
+         
         }
         //let newErrorMessage= $('').append('errorMessage');
         document.getElementById('errorMessage').innerHTML= errorMessage;
-        e.preventDefault();
     });
     $('form').prepend('<div id="errorMessage"></div>');
     
