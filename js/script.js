@@ -19,13 +19,14 @@ $(document).ready(function() {
     $('#color option').hide();
     $('#design option:first').hide();
     //Hide all options based on the design clicked show available options for that color.
-    $('#design').on('click',function(){
+    $('#design').on('change',function(){
         $('#color option').hide();
         if ($(this).val() == "js puns"){
             $(':contains(JS Puns shirt only)').show();
         }else {
             $(':contains(JS shirt only)').show(); 
         }
+        $('#color').val('');
     }); 
     
     //Activities Section
@@ -86,7 +87,8 @@ $(document).ready(function() {
             $('#paypal, #bitcoin, p:first, p:last').hide();
         }
     
-    });  
+    }); 
+    $('form').prepend('<div id="errorMessage"></div>');
     $('form').submit(function(e){
         //Form Validation Section
         var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
@@ -123,10 +125,10 @@ $(document).ready(function() {
             $('#cvv').focus();
         }else{
             errorMessage="";
-         
+         alert('Thank You For Registering.')
         }
         //let newErrorMessage= $('').append('errorMessage');
         document.getElementById('errorMessage').innerHTML= errorMessage;
     });
-    $('form').prepend('<div id="errorMessage"></div>');
+    
     
