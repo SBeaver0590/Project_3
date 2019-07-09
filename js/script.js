@@ -127,7 +127,6 @@ $(document).ready(function() {
             errorMessage="";
          alert('Thank You For Registering.')
         }
-        //let newErrorMessage= $('').append('errorMessage');
         document.getElementById('errorMessage').innerHTML= errorMessage;
     });
     
