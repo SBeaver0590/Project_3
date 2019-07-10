@@ -2,7 +2,7 @@
 $(document).ready(function() {
     //Focus Section
     $('#name').focus();//Here is where I set focus to the name input field.
-});
+
    
     //Job Role Section   
     $('#other-title').hide(); //target the other input field and hide it.
@@ -70,64 +70,82 @@ $(document).ready(function() {
          }
           }
     });
-    //Payment Section
-    $('#payment').val('credit card');
-    $('p:first').hide();
-    $('p:last').hide();
-    //Show the credit card option initially, if user chooses something else show method for that option.
-    $('#payment').change(function() {
-        if($('#payment option:selected').val() === 'paypal') {
-            $('#credit-card, #bitcoin, p:last').hide();
-            $('#paypal, p:first').show();
-        } else if ($('#payment option:selected').val() === "bitcoin") {
-            $('#credit-card, #paypal, p:first').hide();
-            $('#bitcoin, p:last').show();
-        } else {
-            $('#credit-card').show();
-            $('#paypal, #bitcoin, p:first, p:last').hide();
-        }
-    
-    }); 
-    $('form').prepend('<div id="errorMessage"></div>');
-    $('form').submit(function(e){
-        //Form Validation Section
-        var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-        var creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/g;
-        var zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
-        var errorMessage ="";
-        //if the user fails to provide all the required information show an error and do not allow it to be submitted
-        //until all fields are complete.
+          //Payment Section
+            $('#payment').val('credit card');
+            $('p:first').hide();
+            $('p:last').hide();
+     //Show the credit card option initially, if user chooses something else show method for that option.
+             $('#payment').change(function() {
+            if($('#payment option:selected').val() === 'paypal') {
+                $('#credit-card, #bitcoin, p:last').hide();
+                $('#paypal, p:first').show();
+            } else if ($('#payment option:selected').val() === "bitcoin") {
+                $('#credit-card, #paypal, p:first').hide();
+                $('#bitcoin, p:last').show();
+            } else {
+                $('#credit-card').show();
+                $('#paypal, #bitcoin, p:first, p:last').hide();
+            }
+        
+        }); 
+            $('form').prepend('<div id="errorMessage"></div>');
+            $('form').submit(function(e){
+            //Form Validation Section
+            var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+            // var creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/;
+            // var zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
+            var creditCard = /^[0-9]{13,16}$/;
+            var zipCode = /^[0-9]{5}$/;
+            var cvv = /^[0-9]{3}$/;
             
-        if($('#name').val()=== ""){
-            e.preventDefault();
-            errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
-            $('#name').addClass('error');
-            $('#name').focus();
-        }else if(!emailAddress.test($('#mail').val()) ){
-            e.preventDefault();
-            errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
-            $('#mail').focus();
-        }else if($(".activities > label > input:checked").length=== 0 ){
-            e.preventDefault();
-            errorMessage= "<h2>Error!</h2> Please select at least one activity.";
-            $('.activities').focus();
-        }else if($('#payment').val()==="credit card"&& !creditCard.test($("#cc-num").val()) ){
-            e.preventDefault();
-            errorMessage= "<h2>Error!</h2> Please enter a valid credit card number.";
-            $('#cc-num').focus();
-        }else if($('#payment').val()==="credit card"&& !zipCode.test($("#zip").val())){
-            e.preventDefault();
-            errorMessage= "<h2>Error!</h2> Please enter a valid zip code.";
-            $('#zip').focus();
-        }else if($('#payment').val()==="credit card"&& $("#cvv").val().length < 3) {
-            e.preventDefault();
-            errorMessage= "<h2>Error!</h2> Please enter 3 digits for your CVV";
-            $('#cvv').focus();
-        }else{
-            errorMessage="";
-         alert('Thank You For Registering.')
-        }
-        document.getElementById('errorMessage').innerHTML= errorMessage;
-    });
+
+            var errorMessage ="";
+            //if the user fails to provide all the required information show an error and do not allow it to be submitted
+            //until all fields are complete.
+                
+            if($('#name').val()=== ""){
+                e.preventDefault();
+                errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
+                $("html, body").animate({scrollTop: 0}, "slow");
+                errorMessage = errorMessage.fontcolor("maroon");
+                $('#name').addClass('error');
+                $('#name').focus();
+            }else if(!emailAddress.test($('#mail').val()) ){
+                e.preventDefault();
+                errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
+                $("html, body").animate({scrollTop: 0}, "slow");
+                errorMessage = errorMessage.fontcolor("maroon");
+                $('#mail').focus();
+            }else if($(".activities > label > input:checked").length=== 0 ){
+                e.preventDefault();
+                errorMessage= "<h2>Error!</h2> Please select at least one activity.";
+                $("html, body").animate({scrollTop: 0}, "slow");
+                errorMessage = errorMessage.fontcolor("maroon");
+                $('.activities').focus();
+            }else if($('#payment').val()==="credit card"&& !creditCard.test($("#cc-num").val()) ){
+                e.preventDefault();
+                //$("#cc-num").css('border-color','red');
+                errorMessage= "<h2>Error!</h2> Please enter a valid credit card number.";
+                $("html, body").animate({scrollTop: 0}, "slow");
+                errorMessage = errorMessage.fontcolor("maroon");
+                $('#cc-num').focus();
+            }else if($('#payment').val()==="credit card"&& !zipCode.test($("#zip").val())){
+                e.preventDefault();
+                errorMessage= "<h2>Error!</h2> Please enter a valid zip code.";
+                $("html, body").animate({scrollTop: 0}, "slow");
+                errorMessage = errorMessage.fontcolor("maroon");
+                $('#zip').focus();
+            }else if($('#payment').val()==="credit card"&& !cvv.test($("#cvv").val())) {
+                e.preventDefault();
+                errorMessage= "<h2>Error!</h2> Please enter 3 digits for your CVV";
+                $("html, body").animate({scrollTop: 0}, "slow");
+                errorMessage = errorMessage.fontcolor("maroon");
+                $('#cvv').focus();
+            }else{
+                errorMessage="";
+            alert('Thank You For Registering.')
+            }
+            document.getElementById('errorMessage').innerHTML= errorMessage;
+        });
     
-    
+});
