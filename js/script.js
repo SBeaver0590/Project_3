@@ -92,27 +92,23 @@ $(document).ready(function() {
             $('form').submit(function(e){
             //Form Validation Section
             var emailAddress = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
-            // var creditCard = /\b\d{4}(| |-)\d{4}\1\d{4}\1\d{4}\b/;
-            // var zipCode = /^\d{5}(?:[-\s]\d{4})?$/;
             var creditCard = /^[0-9]{13,16}$/;
             var zipCode = /^[0-9]{5}$/;
             var cvv = /^[0-9]{3}$/;
-            
-
             var errorMessage ="";
             //if the user fails to provide all the required information show an error and do not allow it to be submitted
             //until all fields are complete.
                 
             if($('#name').val()=== ""){
                 e.preventDefault();
-                errorMessage= "<h2>Error!<h/2> Please be sure to enter all required fields.";
+                errorMessage= "<h2>Error!<h/2> Please be sure to enter a valid name, e-mail, select 1 activity, & credit card info if the option is selected.";
                 $("html, body").animate({scrollTop: 0}, "slow");
                 errorMessage = errorMessage.fontcolor("maroon");
                 $('#name').addClass('error');
                 $('#name').focus();
             }else if(!emailAddress.test($('#mail').val()) ){
                 e.preventDefault();
-                errorMessage= "<h2>Error!</h2> Please provide a valid email address.";
+                errorMessage= "<h3>Error!</h3> Please provide a valid email address.";
                 $("html, body").animate({scrollTop: 0}, "slow");
                 errorMessage = errorMessage.fontcolor("maroon");
                 $('#mail').focus();
